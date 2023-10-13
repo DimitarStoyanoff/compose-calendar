@@ -16,9 +16,7 @@ To just display the calendar you can use the following:
 ```kotlin
 
 val viewModel = object: CalendarViewModel() {
-    override fun fetchNewYearCalendarActivity(year: Int) {
-
-    }
+    override fun fetchNewYearCalendarActivity(year: Int) { }
 }
 val state = remember {
     mutableStateOf(viewModel.calendarActivityData.value)
@@ -49,9 +47,26 @@ CalendarView(
 )
 ```
 
+### Setting ranges
+
+```kotlin
+override fun fetchNewYearCalendarActivity(year: Int) {
+    viewModelScope.launch {
+        calendarActivity.value = CalendarViewUiState.Loading
+        // Setting example data.
+        calendarUiStates = listOf(
+            CalendarUiState(LocalDate.now(), LocalDate.now().plusDays(3))
+        )
+        // Updating the UI.
+        calendarActivity.value = 
+            CalendarViewUiState.Success(filterMonthRanges(calendarUiStates, currentMonth.value.yearMonth))
+    }
+}
+```
+
 ### Note on desugaring
 
-The library uses desugaring. Though the APK size does not increase significantly in this exact use case, if you do not wish to introduce desugaring to your project you can instead use the `setSelectedRanges(data: List<Pair<Long, Long?>>)` function in `CalendarState` to set the ranges in a backwards-compatible manner.
+The library uses desugaring. Though the APK size does not increase significantly in this exact use case, if you do not wish to introduce desugaring to your project you can instead use the `setSelectedRanges(data: List<Pair<Long, Long?>>)` function (see sample project) to set the ranges in a backwards-compatible manner.
 
 
 ## License
