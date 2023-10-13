@@ -4,7 +4,8 @@ Calendar view made with Jetpack Compose which supports adding selection ranges, 
 
 Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voicelip) Android app.
 
-[](preview.jpg)
+<img src='preview.jpg' width='700' height='567'>
+<!-- ![image](preview.jpg) -->
 
 ## Basic Usage
 
