@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ComposeCalendar"
 include(":calendar")
- 
+include(":sample")

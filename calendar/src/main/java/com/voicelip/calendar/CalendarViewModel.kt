@@ -23,9 +23,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.temporal.WeekFields
 import java.util.Locale
 
 /**
@@ -33,10 +36,10 @@ import java.util.Locale
  */
 abstract class CalendarViewModel : ViewModel() {
 
-    private val _calendarActivity = MutableLiveData<CalendarViewUiState>()
+    protected val calendarActivity = MutableLiveData<CalendarViewUiState>()
 
     /** Presented calendar view ranges data. */
-    val calendarActivity: LiveData<CalendarViewUiState> = _calendarActivity
+    val calendarActivityData: LiveData<CalendarViewUiState> = calendarActivity
 
     /** Currently previewed month. */
     var currentMonth = mutableStateOf(
@@ -44,7 +47,7 @@ abstract class CalendarViewModel : ViewModel() {
     )
 
     /** States which hold calendar ranges for the entire year. */
-    private var calendarUiStates = listOf<CalendarUiState>()
+    protected var calendarUiStates = listOf<CalendarUiState>()
 
     private val locale = AppCompatDelegate.getApplicationLocales()[0] ?: Locale.getDefault()
 
@@ -74,7 +77,7 @@ abstract class CalendarViewModel : ViewModel() {
      *
      * @param isMovedForward true if user clicked next month, false if user clicked previous.
      */
-    private fun updateMonth(isMovedForward: Boolean) {
+    protected fun updateMonth(isMovedForward: Boolean) {
         val oldYearValue = currentMonth.value.yearMonth.year
         val newMonth = if (isMovedForward) {
             currentMonth.value.yearMonth.plusMonths(1)
@@ -86,7 +89,7 @@ abstract class CalendarViewModel : ViewModel() {
             fetchNewYearCalendarActivity(newMonth.year)
         } else {
             val newList = filterMonthRanges(calendarUiStates, newMonth)
-            _calendarActivity.value = CalendarViewUiState.Success(newList)
+            calendarActivity.value = CalendarViewUiState.Success(newList)
         }
     }
 
@@ -95,7 +98,7 @@ abstract class CalendarViewModel : ViewModel() {
      *
      * @param month the year month that is to be used for the [Month].
      */
-    private fun createMonth(month: YearMonth): Month {
+    protected fun createMonth(month: YearMonth): Month {
         val numberWeeks = month.getNumberWeeks()
         val listWeekItems = mutableListOf<Week>()
         for (week in 0 until numberWeeks) {
@@ -107,7 +110,7 @@ abstract class CalendarViewModel : ViewModel() {
     /**
      * Used for showing ranges only for the current month.
      */
-    private fun filterMonthRanges(ranges: List<CalendarUiState>, month: YearMonth) = ranges.filter {
+    protected fun filterMonthRanges(ranges: List<CalendarUiState>, month: YearMonth) = ranges.filter {
         it.hasSelectedPeriodOverlap(month.atDay(1),month.atEndOfMonth())
     }
 
@@ -116,4 +119,38 @@ abstract class CalendarViewModel : ViewModel() {
      * `calendarUiStates` value.
      */
     abstract fun fetchNewYearCalendarActivity(year: Int)
+
+    /**
+     * Sets the pill ranges on the calendar.
+     *
+     * @param data a list of pairs with start date and end date. The dates are in epoch seconds.
+     */
+    protected fun setSelectedRanges(data: List<Pair<Long, Long?>>) {
+        calendarUiStates = data.map { entry ->
+            CalendarUiState(
+                Instant.ofEpochSecond(entry.first).atZone(ZoneId.systemDefault()).toLocalDate(),
+                entry.second?.let { Instant.ofEpochSecond(it).atZone(ZoneId.systemDefault()).toLocalDate() }
+            )
+        }
+    }
+}
+
+/**
+ * @return the number of weeks in the selected month given a calendar standard. Defaults to [WeekFields.ISO].
+ */
+fun YearMonth.getNumberWeeks(weekFields: WeekFields = WeekFields.ISO): Int {
+    val firstWeekNumber = this.atDay(1)[weekFields.weekOfMonth()]
+    val lastWeekNumber = this.atEndOfMonth()[weekFields.weekOfMonth()]
+    return lastWeekNumber - firstWeekNumber + 1 // Both weeks inclusive
+}
+
+fun String.capitalize(locale: Locale) = replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
+
+/**
+ * Represents calendar server data related to calendar ranges.
+ */
+sealed interface CalendarViewUiState {
+    data class Success(val data: List<CalendarUiState>) : CalendarViewUiState
+    data object Loading : CalendarViewUiState
+    data object Error : CalendarViewUiState
 }

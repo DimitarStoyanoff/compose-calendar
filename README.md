@@ -2,7 +2,7 @@
 
 Calendar view made with Jetpack Compose which supports adding selection ranges, displaying them with an animation, moving between months, and a loading view.
 
-Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voicelip) app.
+Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voicelip) Android app.
 
 ## Basic Usage
 
@@ -12,16 +12,19 @@ To just display the calendar you can use the following:
 
 ```kotlin
 
-val calendarState = remember {
-    CalendarState()
+val viewModel = object: CalendarViewModel() {
+    override fun fetchNewYearCalendarActivity(year: Int) {
+
+    }
 }
 val state = remember {
-    mutableStateOf(CalendarViewUiState.Success(calendarState.calendarUiState.value))
+    mutableStateOf(viewModel.calendarActivityData.value)
 }
+
 CalendarView(
-    currentMonth = calendarState.currentMonth,
+    currentMonth = viewModel.currentMonth,
     calendarRangesState = state,
-    currentMonthTitleProvider = { calendarState.getCurrentMonthTitle() },
+    currentMonthTitleProvider = { viewModel.getCurrentMonthTitle() },
     onPreviousClick = {},
     onNextClick = {}
 )
@@ -33,7 +36,7 @@ CalendarView(
 It is recommended that the data shown on the calendar is stored in a ViewModel. There it can be easily managed and persisted. You can use your own implementation, or subclass `CalendarViewModel` and reuse some of its functionality. Then you can use the following setup:
 
 ```kotlin
-        CalendarView(
+CalendarView(
     Modifier.wrapContentWidth(),
     currentMonth = calendarViewModel.currentMonth,
     calendarRangesState = calendarViewModel.calendarActivity.observeAsState(),

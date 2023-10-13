@@ -243,16 +243,19 @@ private fun DaysOfWeekText(text: String, modifier: Modifier = Modifier) = Text(
 @Preview
 @Composable
 fun CalendarViewPreview() {
-    val calendarState = remember {
-        CalendarState()
+    val viewModel = object: CalendarViewModel() {
+        override fun fetchNewYearCalendarActivity(year: Int) {
+
+        }
     }
     val state = remember {
-        mutableStateOf(CalendarViewUiState.Success(calendarState.calendarUiState.value))
+        mutableStateOf(viewModel.calendarActivityData.value)
     }
+
     CalendarView(
-        currentMonth = calendarState.currentMonth,
+        currentMonth = viewModel.currentMonth,
         calendarRangesState = state,
-        currentMonthTitleProvider = { calendarState.getCurrentMonthTitle() },
+        currentMonthTitleProvider = { viewModel.getCurrentMonthTitle() },
         onPreviousClick = {},
         onNextClick = {}
     )
