@@ -7,47 +7,26 @@ Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voiceli
 <img src='preview.jpg' width='700' height='567'>
 <!-- ![image](preview.jpg) -->
 
-## Basic Usage
+## Usage
 
 ### Displaying the calendar
 
 To just display the calendar you can use the following:
 
 ```kotlin
-
-val viewModel = object: CalendarViewModel() {
-    override fun fetchNewYearCalendarActivity(year: Int) { }
-}
-val state = remember {
-    mutableStateOf(viewModel.calendarActivityData.value)
-}
-
 CalendarView(
-    currentMonth = viewModel.currentMonth,
-    calendarRangesState = state,
-    currentMonthTitleProvider = { viewModel.getCurrentMonthTitle() },
-    onPreviousClick = {},
-    onNextClick = {}
+    Modifier.wrapContentSize(),
+    currentMonth = calendarViewModel.currentMonth,
+    calendarRangesState = calendarViewModel.calendarActivity.observeAsState(),
+    currentMonthTitleProvider = { calendarViewModel.getCurrentMonthTitle() },
+    onPreviousClick = { },
+    onNextClick = { }
 )
-
 ```
 
 ### ViewModel logic
 
 It is recommended that the data shown on the calendar is stored in a ViewModel. There it can be easily managed and persisted. You can use your own implementation, or subclass `CalendarViewModel` and reuse some of its functionality. Then you can use the following setup:
-
-```kotlin
-CalendarView(
-    Modifier.wrapContentWidth(),
-    currentMonth = calendarViewModel.currentMonth,
-    calendarRangesState = calendarViewModel.calendarActivity.observeAsState(),
-    currentMonthTitleProvider = { calendarViewModel.getCurrentMonthTitle() },
-    onPreviousClick = { calendarViewModel.previousMonthClicked() },
-    onNextClick = { calendarViewModel.nextMonthClicked() }
-)
-```
-
-### Setting ranges
 
 ```kotlin
 override fun fetchNewYearCalendarActivity(year: Int) {
@@ -66,8 +45,9 @@ override fun fetchNewYearCalendarActivity(year: Int) {
 
 ### Note on desugaring
 
-The library uses desugaring. Though the APK size does not increase significantly in this exact use case, if you do not wish to introduce desugaring to your project you can instead use the `setSelectedRanges(data: List<Pair<Long, Long?>>)` function (see sample project) to set the ranges in a backwards-compatible manner.
+The library uses desugaring. Though the APK size does not increase significantly in this exact use case, if you do not wish to introduce desugaring to your project you can instead use the `setSelectedRanges(data: List<Pair<Long, Long?>>)` function to set the ranges in a backwards-compatible manner.
 
+Check out the sample project for more details.
 
 ## License
 
