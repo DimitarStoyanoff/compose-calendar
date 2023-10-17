@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Voicelip Ltd.
+ * Copyright 2023 dimitarstoyanoff.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@ package io.github.dimitarstoyanoff.calendar
 import java.time.YearMonth
 
 /**
- * Data class used to represent a single month.
+ * Data class used to represent a single month week.
  *
- * @param yearMonth the specific month from a certain year.
- * @param weeks the month broken down into [Week] objects.
+ * @param number the consecutive number of the week.
+ * @param yearMonth the month this week is from.
  */
-data class Month(
-    val yearMonth: YearMonth,
-    val weeks: List<Week>
+data class Week(
+    val number: Int,
+    val yearMonth: YearMonth
 )
