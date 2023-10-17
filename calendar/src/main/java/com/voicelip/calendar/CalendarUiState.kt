@@ -16,7 +16,7 @@
  * Created by dstoyanov on 07/03/2023.
  */
 
-package com.voicelip.calendar
+package io.github.dimitarstoyanoff.calendar
 
 import java.time.LocalDate
 import java.time.YearMonth

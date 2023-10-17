@@ -1,4 +1,4 @@
-package com.voicelip.calendar.sample.ui.theme
+package io.github.dimitarstoyanoff.calendar.sample.ui.theme
 
 import android.app.Activity
 import android.os.Build

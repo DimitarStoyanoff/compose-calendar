@@ -16,7 +16,7 @@
  * Created by dstoyanov on 07/03/2023.
  */
 
-package com.voicelip.calendar
+package io.github.dimitarstoyanoff.calendar
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.core.Animatable

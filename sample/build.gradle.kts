@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.voicelip.calendar.sample"
+    namespace = "io.github.dimitarstoyanoff.calendar.sample"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.voicelip.calendar.sample"
+        applicationId = "io.github.dimitarstoyanoff.calendar.sample"
         minSdk = 23
         targetSdk = 34
         versionCode = 1

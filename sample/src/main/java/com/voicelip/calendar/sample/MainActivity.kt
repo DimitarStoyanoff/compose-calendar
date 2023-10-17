@@ -1,4 +1,4 @@
-package com.voicelip.calendar.sample
+package io.github.dimitarstoyanoff.calendar.sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,9 +11,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.voicelip.calendar.CalendarView
-import com.voicelip.calendar.sample.ui.theme.ComposeCalendarTheme
-import com.voicelip.calendar.sample.ui.theme.Gray12
+import io.github.dimitarstoyanoff.calendar.CalendarView
+import io.github.dimitarstoyanoff.calendar.sample.ui.theme.ComposeCalendarTheme
+import io.github.dimitarstoyanoff.calendar.sample.ui.theme.Gray12
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

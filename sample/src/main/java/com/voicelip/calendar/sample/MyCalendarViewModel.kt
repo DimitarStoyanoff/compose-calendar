@@ -1,9 +1,9 @@
-package com.voicelip.calendar.sample
+package io.github.dimitarstoyanoff.calendar.sample
 
 import androidx.lifecycle.viewModelScope
-import com.voicelip.calendar.CalendarUiState
-import com.voicelip.calendar.CalendarViewModel
-import com.voicelip.calendar.CalendarViewUiState
+import io.github.dimitarstoyanoff.calendar.CalendarUiState
+import io.github.dimitarstoyanoff.calendar.CalendarViewModel
+import io.github.dimitarstoyanoff.calendar.CalendarViewUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
