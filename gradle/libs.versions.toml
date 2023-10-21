@@ -7,12 +7,15 @@ androidxEspresso = "3.5.1"
 androidxComposeBom = "2023.10.00"
 androidDesugarJdkLibs = "2.0.3"
 androidGradlePlugin = "8.1.2"
+gradleNexusPlugin = "1.3.0"
 androidxComposeCompiler = "1.5.2"
 androidxLifecycle = "2.6.2"
 kotlin = "1.9.0"
 junit = "1.1.5"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.8.0"
+dokka = "1.9.10"
+calendar = "0.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
@@ -35,8 +38,12 @@ activity-compose = { group = "androidx.activity", name = "activity-compose", ver
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+dokka = { group = "org.jetbrains.dokka", name = "android-documentation-plugin", version.ref = "dokka"}
+calendar = { group = "io.github.dimitarstoyanoff", name = "calendar", version.ref = "calendar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+gradle-nexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "gradleNexusPlugin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

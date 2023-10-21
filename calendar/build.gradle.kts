@@ -11,23 +11,13 @@ android {
         minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-proguard-rules.pro")
-    }
-
-    buildTypes {
-        debug {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        consumerProguardFiles("consumer-rules.pro")
+        aarMetadata {
+            minCompileSdk = 23
         }
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        // Added as fix to https://github.com/gradle-nexus/publish-plugin/issues/208
+        publishing {
+            singleVariant("release")
         }
     }
     compileOptions {
@@ -69,3 +59,11 @@ dependencies {
     // Desugar
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 }
+
+ext {
+    set("PUBLISH_GROUP_ID", "io.github.dimitarstoyanoff")
+    set("PUBLISH_ARTIFACT_ID", "calendar")
+    set("PUBLISH_VERSION", "0.0.2")
+}
+
+apply("${rootProject.projectDir}/scripts/publish-module.gradle")

@@ -7,6 +7,15 @@ Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voiceli
 <img src='preview.jpg' width='700' height='567'>
 <!-- ![image](preview.jpg) -->
 
+## Setup
+Library is available on Maven Central repository.
+```kotlin
+  // module-level build.gradle
+  dependecies {
+    implementation("io.github.dimitarstoyanoff:calendar:<latest-version>")
+  }
+```
+
 ## Usage
 
 ### Displaying the calendar
