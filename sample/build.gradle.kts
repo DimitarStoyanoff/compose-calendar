@@ -46,7 +46,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":calendar"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewModelCompose)
@@ -65,4 +64,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
+    implementation(libs.calendar)
 }
