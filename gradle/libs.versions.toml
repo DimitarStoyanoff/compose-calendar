@@ -15,7 +15,7 @@ junit = "1.1.5"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.8.0"
 dokka = "1.9.10"
-calendar = "0.0.1"
+calendar = "0.0.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }

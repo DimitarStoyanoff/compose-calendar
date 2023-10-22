@@ -10,10 +10,27 @@ Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voiceli
 ## Setup
 Library is available on Maven Central repository.
 ```kotlin
-  // module-level build.gradle
-  dependecies {
-    implementation("io.github.dimitarstoyanoff:calendar:<latest-version>")
-  }
+    // module-level build.gradle
+    dependecies {
+        implementation("io.github.dimitarstoyanoff:calendar:<latest-version>")
+    }
+```
+
+If your app module has a minSdk < 26, you also need to add [code desugaring](https://developer.android.com/studio/write/java8-support) to your module:
+
+```kotlin
+    android {
+    compileOptions {
+            isCoreLibraryDesugaringEnabled = true
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
+    }
+
+    dependecies {
+        // ...
+        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:<latest-version>")
+    }
 ```
 
 ## Usage
@@ -23,38 +40,34 @@ Library is available on Maven Central repository.
 To just display the calendar you can use the following:
 
 ```kotlin
-CalendarView(
-    Modifier.wrapContentSize(),
-    currentMonth = calendarViewModel.currentMonth,
-    calendarRangesState = calendarViewModel.calendarActivity.observeAsState(),
-    currentMonthTitleProvider = { calendarViewModel.getCurrentMonthTitle() },
-    onPreviousClick = { },
-    onNextClick = { }
-)
+    CalendarView(
+        Modifier.wrapContentSize(),
+        currentMonth = calendarViewModel.currentMonth,
+        calendarRangesState = calendarViewModel.calendarActivity.observeAsState(),
+        currentMonthTitleProvider = { calendarViewModel.getCurrentMonthTitle() },
+        onPreviousClick = { calendarViewModel.previousMonthClicked() },
+        onNextClick = { calendarViewModel.nextMonthClicked() }
+    )
 ```
 
 ### ViewModel logic
 
-It is recommended that the data shown on the calendar is stored in a ViewModel. There it can be easily managed and persisted. You can use your own implementation, or subclass `CalendarViewModel` and reuse some of its functionality. Then you can use the following setup:
+It is recommended that the data shown on the calendar is stored in its own ViewModel. There it can be easily managed and persisted. You can use your own implementation, or subclass `CalendarViewModel` and reuse some of its functionality. Then you can use the following setup:
 
 ```kotlin
-override fun fetchNewYearCalendarActivity(year: Int) {
-    viewModelScope.launch {
-        calendarActivity.value = CalendarViewUiState.Loading
-        // Setting example data.
-        calendarUiStates = listOf(
-            CalendarUiState(LocalDate.now(), LocalDate.now().plusDays(3))
-        )
-        // Updating the UI.
-        calendarActivity.value = 
-            CalendarViewUiState.Success(filterMonthRanges(calendarUiStates, currentMonth.value.yearMonth))
+    override fun fetchNewYearCalendarActivity(year: Int) {
+        viewModelScope.launch {
+            calendarActivity.value = CalendarViewUiState.Loading
+            // Setting example data.
+            calendarUiStates = listOf(
+                CalendarUiState(LocalDate.now(), LocalDate.now().plusDays(3))
+            )
+            // Updating the UI.
+            calendarActivity.value = 
+                CalendarViewUiState.Success(filterMonthRanges(calendarUiStates, currentMonth.value.yearMonth))
+        }
     }
-}
 ```
-
-### Note on desugaring
-
-The library uses desugaring. Though the APK size does not increase significantly in this exact use case, if you do not wish to introduce desugaring to your project you can instead use the `setSelectedRanges(data: List<Pair<Long, Long?>>)` function to set the ranges in a backwards-compatible manner.
 
 Check out the sample project for more details.
 

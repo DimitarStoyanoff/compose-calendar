@@ -8,12 +8,12 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         aarMetadata {
-            minCompileSdk = 23
+            minCompileSdk = 26
         }
         // Added as fix to https://github.com/gradle-nexus/publish-plugin/issues/208
         publishing {
@@ -21,7 +21,6 @@ android {
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -55,15 +54,12 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)
     androidTestImplementation(libs.androidx.compose.ui.test)
-
-    // Desugar
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 }
 
 ext {
     set("PUBLISH_GROUP_ID", "io.github.dimitarstoyanoff")
     set("PUBLISH_ARTIFACT_ID", "calendar")
-    set("PUBLISH_VERSION", "0.0.2")
+    set("PUBLISH_VERSION", "0.0.3")
 }
 
 apply("${rootProject.projectDir}/scripts/publish-module.gradle")

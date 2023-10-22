@@ -7,7 +7,6 @@ import io.github.dimitarstoyanoff.calendar.CalendarViewUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.Date
 
 class MyCalendarViewModel : CalendarViewModel() {
 
@@ -19,8 +18,7 @@ class MyCalendarViewModel : CalendarViewModel() {
         viewModelScope.launch {
             calendarActivity.value = CalendarViewUiState.Loading
             delay(2000)
-            calendarUiStates = getSampleDataWithDesugar()
-//            setSampleDataWithoutDesugar()
+            calendarUiStates = getSampleData()
             calendarActivity.value = CalendarViewUiState.Success(
                 filterMonthRanges(
                     calendarUiStates,
@@ -30,29 +28,7 @@ class MyCalendarViewModel : CalendarViewModel() {
         }
     }
 
-    /**
-     * If you're targeting below API 26 and are not using desugaring you can set data this way.
-     */
-    private fun setSampleDataWithoutDesugar() {
-        val todayLongInSeconds = Date().time / 1000
-        val dayInSeconds = 60 * 60 * 24
-        setSelectedRanges(
-            listOf(
-                Pair(todayLongInSeconds,
-                    todayLongInSeconds + (dayInSeconds * 3)
-                ),
-                Pair(
-                    todayLongInSeconds + (dayInSeconds * 17),
-                    todayLongInSeconds + (dayInSeconds * 26)
-                )
-            )
-        )
-    }
-
-    /**
-     * If you're using desugaring in your app module or are targeting API 26 and above you can set data this way.
-     */
-    private fun getSampleDataWithDesugar() = listOf(
+    private fun getSampleData() = listOf(
         CalendarUiState(
             LocalDate.now(),
             LocalDate.now().plusDays(3)
@@ -62,5 +38,4 @@ class MyCalendarViewModel : CalendarViewModel() {
             LocalDate.now().plusDays(26)
         )
     )
-
 }
