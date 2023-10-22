@@ -8,13 +8,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 26
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-        aarMetadata {
-            minCompileSdk = 26
-        }
         // Added as fix to https://github.com/gradle-nexus/publish-plugin/issues/208
         publishing {
             singleVariant("release")
@@ -59,7 +54,7 @@ dependencies {
 ext {
     set("PUBLISH_GROUP_ID", "io.github.dimitarstoyanoff")
     set("PUBLISH_ARTIFACT_ID", "calendar")
-    set("PUBLISH_VERSION", "0.0.3")
+    set("PUBLISH_VERSION", "0.0.4")
 }
 
 apply("${rootProject.projectDir}/scripts/publish-module.gradle")
