@@ -1,5 +1,13 @@
 # Compose Calendar with selections
 
+![GitHub tag (with filter)](https://img.shields.io/github/v/tag/dimitarstoyanoff/compose-calendar?label=Latest%20release)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dimitarstoyanoff/calendar?link=https%3A%2F%2Fcentral.sonatype.com%2Fartifact%2Fio.github.dimitarstoyanoff%2Fcalendar)](https://img.shields.io/maven-central/v/io.github.dimitarstoyanoff/calendar
+)
+![Static Badge](https://img.shields.io/badge/Voicelip-43DBFF?link=voicelip.com)
+
+
+
+
 Calendar view made with Jetpack Compose which supports adding selection ranges, displaying them with an animation, moving between months, and a loading view.
 
 Used in the [Voicelip](https://play.google.com/store/apps/details?id=com.voicelip) Android app.
