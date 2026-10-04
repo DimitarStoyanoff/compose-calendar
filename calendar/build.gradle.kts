@@ -1,13 +1,17 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "io.github.dimitarstoyanoff.calendar"
-    compileSdk = 34
+    compileSdk = 37
 
     defaultConfig {
+        minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         // Added as fix to https://github.com/gradle-nexus/publish-plugin/issues/208
@@ -16,23 +20,24 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
+}
+
+kotlin {
+    compilerOptions {
+        languageVersion = KotlinVersion.KOTLIN_2_3
+        jvmTarget = JvmTarget.JVM_11
     }
 }
 
 dependencies {
     // Androidx
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
 
     // Testing
@@ -43,7 +48,6 @@ dependencies {
     // Androidx Compose
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
-    androidTestImplementation(composeBom)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
