@@ -21,7 +21,6 @@ Library is available on Maven Central repository.
 ```
 
 If your app module has a minSdk < 26, you also need to add [code desugaring](https://developer.android.com/studio/write/java8-support) to your module.
-```
 
 ## Usage
 
