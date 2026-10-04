@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "io.github.dimitarstoyanoff.calendar.sample"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -34,24 +34,24 @@ android {
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlin {
-        compilerOptions {
-            languageVersion = KotlinVersion.KOTLIN_2_2
-            jvmTarget = JvmTarget.JVM_11
-        }
     }
     buildFeatures {
         compose = true
     }
 }
 
+kotlin {
+    compilerOptions {
+        languageVersion = KotlinVersion.KOTLIN_2_3
+        jvmTarget = JvmTarget.JVM_11
+    }
+}
+
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.androidx.core)
+    implementation(libs.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -61,11 +61,9 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.compose.runtime.livedata)
     testImplementation(libs.junit4)
-    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.compose.ui.test)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
     implementation(libs.calendar)
 }
